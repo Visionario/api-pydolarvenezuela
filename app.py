@@ -1,19 +1,20 @@
-import logging 
+import logging
+
 from apscheduler.schedulers.background import BackgroundScheduler
+from flasgger import Swagger
 from flask import Flask
 from flask_cors import CORS
-from flasgger import Swagger
 
-from src.core import limiter
-from src.consts import TIMEOUT, GETLOGS
 from src import cron
-from src.routes import index, monitors, admin
+from src.consts import GETLOGS, TIMEOUT
+from src.core import limiter
 from src.exceptions import (
     forbidden,
-    page_not_found,
+    gateway_timeout,
     internal_server_error,
-    gateway_timeout
-)
+    page_not_found,
+    )
+from src.routes import admin, index, monitors
 
 if GETLOGS:
     logging.basicConfig(filename='logs.log', level=logging.INFO)
